@@ -1,0 +1,38 @@
+\section{Introduction}
+\label{sec-intro}
+
+Pattern search problem: Given that text $T[0\ldots n{-}1]$ exists over some alphabet of size $\sigma$ = $\mid$$\Sigma$$\mid$
+and a pattern $P[0\ldots m{-}1]$, locate the occurrences of $P$ in $T$. $grep$ is one of the simplest forms of document retrieval 
+and allows wildcard marching through regular expressions. However, it may not be ideal for large documents, ranked retrieval and flexible matching operations.
+
+Design of a search engine should include: 
+\begin{itemize}
+  \item Query resolution effectiveness
+  \item Query term proximity 
+  \item Fast resolution of queries 
+  \item Minimal usage of hardware resources 
+  \item Scalability in terms of data
+  \item Accommodate changes within documents
+  \item Features such as Boolean restriction and phrase querying
+\end{itemize}
+
+Indexing strategies are data structures that map terms to the documents containing them for faster query retrieval.
+\iffalse
+
+\texttt Similarity measures may be defined as follows: 
+\begin{itemize}
+  \item $f$$_{d,t}$, the frequency of term t in document d;
+  \iffalse
+  \item f$_{q,t}$, the frequency of term t in the query;
+  \item f$_{t}$, the number of documents containing one or more occurrences of term t;
+  \item F$_{t}$, the number of occurrences of term t in the collection;
+  \fi 
+  \item $N$, the number of documents in the collection; and
+  \item $n$, the number of indexed terms in the collection.
+\end{itemize}
+\fi
+Inverse document frequency and term frequency statistics may be used to measure the how important a term is to a document.
+
+
+
+

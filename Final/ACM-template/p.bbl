@@ -1,0 +1,46 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Agosti and Smeaton(1996)]{ag96kap}
+M.~Agosti and A.~F. Smeaton.
+\newblock Information retrieval and hypertext.
+\newblock \emph{Kluwer Academic Publishers, Dordrecht, Netherlands.}, 1996.
+
+\bibitem[Bahle et~al.(2001)Bahle, Williams, and Zobel]{bwz01spi}
+D.~Bahle, H.~E. Williams, and J.~Zobel.
+\newblock Compaction techniques for nextword indexes.
+\newblock \emph{String Processing and Information Retrieval}, pages 33--45,
+  2001.
+
+\bibitem[B{\"{u}}ttcher and Clarke()]{bc06ecir}
+S.~B{\"{u}}ttcher and C.~L.~A. Clarke.
+\newblock A hybrid approach to index maintenance in dynamic text retrieval
+  systems,, london, uk, april 10-12, 2006, proceedings.
+\newblock \emph{Proc. ECIR}, pages 229--240.
+
+\bibitem[Gog et~al.(2014)Gog, Moffat, Culpepper, Turpin, and Wirth]{gmctw14}
+S.~Gog, A.~Moffat, J.~S. Culpepper, A.~Turpin, and A.~Wirth.
+\newblock Compressing integers for fast file access.
+\newblock \emph{IEEE TRANSACTIONS ON KNOWLEDGE AND DATA ENGINEERING},
+  26\penalty0 (8), 2014.
+
+\bibitem[Sinha et~al.(2008)Sinha, Puglisi, Moffat, and Turpin]{spmt08sigmod}
+R.~Sinha, S.~J. Puglisi, A.~Moffat, and A.~Turpin.
+\newblock Improving suffix array locality for fast pattern matching on disk.
+\newblock \emph{ACM SIGMOD}, pages 661--672, 2008.
+
+\bibitem[Williams et~al.(1999)Williams, Zobel, and Anderson]{sza99adc}
+H.~E. Williams, J.~Zobel, and P.~Anderson.
+\newblock What's next? index structures for efficient phrase querying.
+\newblock \emph{Australasian Database Conference}, pages 141--152, 1999.
+
+\bibitem[Zobel and Moffat(2006)]{zm06compsurv}
+J.~Zobel and A.~Moffat.
+\newblock Inverted files for text search engines.
+\newblock \emph{ACM Comp. Surv.}, 38\penalty0 (2), 2006.
+
+\end{thebibliography}

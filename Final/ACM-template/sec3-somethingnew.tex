@@ -1,0 +1,16 @@
+\section{Comparison and Review}
+\label{sec-somethingnew}
+
+An overview of the performance is shown in \textbf {Table 1}. 
+
+\myparagraph{Inverted Index} Major disadvantage of in-memory strategy is index construction costs perhaps two-thirds of the total time. Also, the entire list has to be relocated if there is not enough space for new updates. Thus, non-sequential disk updates maybe possible. 
+Merge-based update pose the problem of entire file being written/read whenever any on-disk inverted file is updated, even for a small posting.  Hence, this approach becomes problematic when dealing with large lists, where they have to be copied several times. Substantial performance improvement happen using the hybrid approach as it avoids unnecessary disk transfers during merging of the unchanged portions of posting lists. 
+  
+\myparagraph{Nextword index Index} Substantially faster than a regular structure for resolving typical two or three word phrase queries. Mono-directional phrase browsing in large collections would be supported by nextword indexes. The drawback is that there is not much of a significant size improvement when compared to conventional techniques. 
+ 
+\myparagraph{On-Disk Suffix Arrays} The two-level suffix array requires less disk space using disk blocks that are based on prefixes allowing reductions between blocks. The condensed BWT is comprehensive, $existence$ and $count$ queries can be resolved without disk access. The drawback is the construction of suffix array; however, if generated from a central service, the two-level structure would be ideal for querying on low-cost devices.
+ 
+
+
+
+

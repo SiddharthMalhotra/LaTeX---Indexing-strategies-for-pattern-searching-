@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: p.aux
+The style file: abbrvnat.bst
+Database file #1: strings-shrt.bib
+Database file #2: local.bib
+Warning--empty year in bc06ecir
+Warning--empty year in bc06ecir
+You've used 7 entries,
+            2773 wiz_defined-function locations,
+            729 strings with 6658 characters,
+and the built_in function-call counts, 3644 in all, are:
+= -- 333
+> -- 210
+< -- 7
++ -- 70
+- -- 63
+* -- 278
+:= -- 541
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 42
+chr.to.int$ -- 7
+cite$ -- 16
+duplicate$ -- 175
+empty$ -- 274
+format.name$ -- 76
+if$ -- 781
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 7
+newline$ -- 43
+num.names$ -- 28
+pop$ -- 84
+preamble$ -- 1
+purify$ -- 35
+quote$ -- 0
+skip$ -- 156
+stack$ -- 0
+substring$ -- 134
+swap$ -- 41
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 77
+warning$ -- 2
+while$ -- 33
+width$ -- 0
+write$ -- 96
+(There were 2 warnings)

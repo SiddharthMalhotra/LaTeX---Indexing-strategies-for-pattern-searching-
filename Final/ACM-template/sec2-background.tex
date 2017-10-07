@@ -1,0 +1,164 @@
+\section{Indexing Techniques}
+\label{sec-background}
+
+
+\subsection{Inverted Index Data Structure}
+
+
+\iffalse
+Matches in document retrieval are based on the user's notion of relevance. Further, the effectiveness of the is measured in terms of first r matches returned being relevant. \itshape Precision and Recall are two methods of measuring effectiveness. 
+Some of the issues with simple matching algorithm are that may introduce results that may be close to the query but not match the exact text. Parsing methods may introduce variations with respect to inner components of the text. 
+\fi 
+
+\texttt {\citet{zm06compsurv}} define inverted lists as a collection which consists of a sequence of pairs of document numbers and in-document frequencies $($$d$, $f$$_{d,t}$$)$ pair, potentially augmented by word positions. Indexed terms may be stored sequentially or as a sequence of blocks that are linked. 
+Some of the implications here would be: 
+Accessing a sequence of blocks located randomly on disk would impose 
+significant costs and the inverted list would be as many times the size. 
+Second, if the invested listed is less than a kilobyte, there would be 
+constraints on the feasible block size. 
+Third, index update should be able to manage variable length fragments. 
+Compression representation may allow large gains of performance. 
+
+
+
+\texttt Techniques for construction of index based on inverted lists: 
+
+\begin{itemize}
+  \item \textbf{In-Memory Inversion:} First collect term frequency information for the inverted 
+list. Then, it places pointers into correct positions. The advantage of this approach is 
+that no memory is wasted due to the random access capabilities of the main 
+memory. This technique is only viable when main memory is $10$-$20$\% greater than 
+size of index and vocabulary that are to be made. 
+%This in-memory index may be augmented with laying out index skeleton on disk and transferring each in skip-sequential manner to a template on the disk file. 
+  \item \textbf{Merge-Based Inversion:} Documents are read and indexed in memory until a fixed capacity is reached. Each inverted list needs to be represented in a structure that can grow as a dynamically resizable array about the term which is encountered. When memory is full, the index is flushed to disk as a single run with the inverted lists in the run stored in lexicographic order to facilitate subsequent merging. 
+\end{itemize}
+
+\iffalse
+\texttt Improving Merge-Based Inversion: 
+\begin{itemize}
+\item Constraining the number of blocks (for example, 4 per term) would allow the query time to be controlled.
+\item Arranging the sequence as a sequence of subindexes will allow only a fraction of the index involved during merge operations. 
+\end{itemize}
+\fi
+
+\myparagraph {Hybrid Approach to Index Maintenance:}
+
+{\citet{bc06ecir}} introduced a novel index maintenance stratergy, in which long lists are modified in-place while, short lists are maintained using merge-based update method. This would help leverage the best of the both strategies and give an optimal performance when compared to either in-place or merge-based alone. 
+
+
+\begin{itemize}
+  \item \textbf{In-Place + Immediate Merge:}
+  Merged on-disk index is created with in-memory data and existing on-disk index. For terms encountered from long list during merge, postings are appended to a file containing postings for the term instead of new index.Short list follow the standard immediate merge strategy.
+  
+  \item \textbf{In-Place + Logarithmic Merge:}
+In logarithmic merge, a series of indexes is maintained, each twice as large as the 
+previous one. Smallest  $A$$_{0}$ are kept in memory and larger ones ($I$$_{0}$, $I$$_{1}$, 
+{\ldots}) on-disk. If $A$$_{0}$ gets too big $($$>$$n$$)$, it is written to disk as  $I$$_{0}$ or merged with 
+$A$$_{0}$ $($if $I$$_{0}$ already exists$)$ as $A$$_{1}$. 
+%% So, either write merge  $A$$_{1}$ to disk as 
+%% $I$$_{1}$ $($if no $I$$_{1}$$)$ or merged with  $I$$_{1}$ to form $A$$_{2}$.
+\end{itemize}
+
+
+
+\subsection{Phrase querying/phrase completion using {\itshape NextWord} Indexing}
+\begin{table*}[t]
+\centering
+\input{tbl-example.tex}
+\mycaption{Performance comparison of Indexing Strategies
+\label{tbl-normalize}}
+\aftertabspace
+\end{table*}
+
+
+Considering users combine querying with browsing along with techniques such as assisted query refinement {\citet{ag96kap}}, {\itshape next-word} indexing is proposed by {\citet{sza99adc}} . Next-word index can, for each distinct word, identify all possible successor words
+and list locations at which they exist in the text database. 
+%The structure of a nextword index as illustrated by {\citep{sza99adc}}  is in Figure 1.
+B-Tree structure is used for storing such vocabularies  
+and nextwords are sorted and stored contiguously. Further front-coding is used; 
+\iffalse
+only the characters of each word that differ from those of the previous word are stored, giving space savings. 
+For example, the sequence of words
+\fi
+\begin{itemize}
+ \item[] 4 acne 7 acolyte 5 acorn 6 acorns 8 acoustic,
+\end{itemize}
+
+can be replaced by,
+
+\begin{itemize}
+ \item[] 4,0 acne 5,2 olyte 3,3 rn 1,5 s 5,3 ustic,
+\end{itemize}
+in which the first number is the length of the stored string and the second is the number of characters shared with the previous string.
+Locations of next word indexes are sorted and compressed with techniques 
+used for standard inverted indexes. Storage of location lists in a concatenated contiguous manner
+implies that information concerning index terms can be found in only two disk 
+accesses. Contiguous storage of variable length greatly reduces cost when 
+compared with separately-stored blocks. 
+
+
+\myparagraph {Compaction Techniques for \itshape NextWord Indexes}
+
+ {\citet{bwz01spi}} techniques for compression reduce space requirements and query response times. They define offset as follows,  document $d$ is a sequence of word occurrences $w$$_{1}$...$w$$_{n}$. Each word $w$$_{i}$ is labelled with an offset $o$$_{i}$.Offsets are positive integers. Based on the fact that relative word positions are required for phrase indexes.
+
+
+\begin{itemize}
+
+ \item \textbf {Compound Indicators}
+Size of the index could be reduced with alternative offset and indicator schemes. Distinct occurrences of terms are explored. W-distinct occurrences if for 1 to n the offset $z$$_{i}$=c for the $c$th occurrence 
+of word $w$$_{i}$ in d.  An indicator $i$ for pair $p$ . $s$ at position $k$ in document $d$ is compound if $i$ = z$_{k}$ .z$_{k+1}$is a pair of integers. to evaluate the query each indicator b\textquotesingle
+= z$_{k}$ .z$_{k+1}$ $\in$ B$_{L}$ where b = z$_{k-1}$ .z$_{k}$
+$\in$ B$_{L}$, add b\textquotesingle to B$_{t\textquotesingle}$. 
+%Prior to compression, both offsets can be differenced for compound indicators. 
+
+ \item \textbf {Offsets based on repeated words}
+For phrase query evaluation, offsets that allow differentiation between repeat occurrences of the same word are sufficient. For each occurrence of word, the corresponding count is recorded. 
+P-distinct offsets offer savings in storage requirements when compared to ordinal offsets. They are sufficient to allow unambiguous left-to-right evaluation of queries. 
+
+\end{itemize}
+
+\subsection{Large-Scale Pattern using Suffix Array}
+If performed sequentially the time complexity of pattern search is $O$$($$n$ + $m$$)$. For $k$ occurrences of $P$ in $T$, the suffix array index takes $O$$($$m$ + $\log$ $n$ + $k$$)$ time and $O$$($$n\log n$$)$ bits of space in addition to $T$. 
+
+{\emph Suffix arrays} (lexicographic ordering of the $n$ suffixes) serve as an effective method for in-memory pattern searching and counting substrings. However, to analyse large amounts of data, for instance, DNA sequencing; data structures requiring 
+less space are utilised. Wavelet tree (FM-index) of the Burrows{-}Wheeler sequence is one such approach allowing backward search technique. 
+
+The BWT may be constructed either directly or by first constructing the suffix array and then deriving the BWT in linear time from it. Drawback is the construction of Suffix Array requires at least 5n bytes of main memory. 
+Some analysis require Longest Common Prefix-array. LCP-array is defined by $\var{LCP}[1]=-1$, $\var{LCP}[n + 1]=-1$, and $LCP[i]$=|lcp(SSA[$i${-}$1$], $\var SSA$$[$i$]$$)$| for $2$$\leq$$i$$\leq$$n$, where $lcp(u, v)$ for strings u and v. They all first construct the suffix array and then obtain the LCP-array in linear time from it. Drawback are similar to BWT.
+
+FM-Index, based on BWT allows pattern search in $O(m \log \sigma)$ time and space proportional to original text. However, it could lead to random m disk access across memory when $T$
+ is too large for the main memory. {\citet{spmt08sigmod}} introduced the LOF-SA which merges suffix and LCP arrays in an interleaving manner and extracts necessary sequences from text to fill in the fringe characters. 
+
+{\citet{gmctw14}} introduced %large-scale pattern search using reduced-space on-disk suffix arrays wherein
+an efficient mechanism for exploiting whole block reductions and describe a condensed 
+BWT mechanism for storing and searching the string labels of a pruned suffix tree. Two major changes made are made, introduction to improvements to LOF-SA and use of condensed BWT structure.
+
+\textbf{Reducible Blocks}
+\begin{itemize}
+\item Suffix pointers were eliminated for block reduction.
+\item  Non-singleton irreducible blocks were placed on-disk. 
+\item LCP's were stored in differences to their relative parent.
+\item Using bit-blind trees LOF SA's fringe characters were removed. 
+
+\end{itemize}
+
+\textbf{Condensed BWT}
+\begin{itemize}
+\item  Reversing the strings stored in index will allow backward search to match the forward prefixes.
+\item Pruned Suffix Tree takes $O$$($$($$B$$+$$\sigma$$)$$\log$$n$$)$ space and identifies leaf in $O$$($$m$$\log$$\sigma$$)$ time
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
